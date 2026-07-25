@@ -1,0 +1,66 @@
+{
+  "general": {
+    "heading": "Ready for your\nnext move?",
+    "subheading": "Let’s build it right"
+  },
+  "ip-empire": {
+    "heading": "Ready to build\nyour IP empire?",
+    "subheading": "Start building today"
+  },
+  "build-business": {
+    "heading": "Ready to build\nyour business?",
+    "subheading": "Build on a stronger foundation"
+  },
+  "protect-business": {
+    "heading": "Ready to protect\nyour business?",
+    "subheading": "Start with a legal review"
+  },
+  "trademark": {
+    "heading": "Ready to protect\nyour brand?",
+    "subheading": "Start with clearance"
+  },
+  "trademark-guide": {
+    "heading": "Download your free\nTrademark Application\nRoadmap",
+    "subheading": "Build the brand on a stronger foundation"
+  },
+  "contracts": {
+    "heading": "Before you sign,\nknow what you’re accepting.",
+    "subheading": "Request a contract review"
+  },
+  "platform": {
+    "heading": "Your product is ready.\nAre your legal terms?",
+    "subheading": "Prepare for launch"
+  },
+  "gaga-universe": {
+    "heading": "Gaga Protected\nThe Bigger Vision",
+    "subheading": "Protect more than one name"
+  },
+  "gaga-strategy": {
+    "heading": "Build A Portfolio\nLike Gaga’s",
+    "subheading": "Plan your filing roadmap"
+  },
+  "gaga-abandoned": {
+    "heading": "Search before you brand",
+    "subheading": "Reach out today"
+  },
+  "gaga-dead": {
+    "heading": "Gaga’s Dead Marks\nAren’t Available",
+    "subheading": "Get a full clearance review"
+  },
+  "swift-universe": {
+    "heading": "Protect the whole brand",
+    "subheading": "Map your marks today"
+  },
+  "swift-strategy": {
+    "heading": "Build your filing plan",
+    "subheading": "Start with the core mark"
+  },
+  "swift-abandoned": {
+    "heading": "Check the whole record",
+    "subheading": "Before you pick a name"
+  },
+  "swift-dead": {
+    "heading": "Dead is not available",
+    "subheading": "Get a clearance review"
+  }
+}

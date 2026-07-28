@@ -9,13 +9,18 @@ screenshotted; nothing is converted to SVG along the way.
 
 ## Brand palette (TWC · The Whole Concept)
 
-| Name       | Hex       | Role                                        |
-| ---------- | --------- | ------------------------------------------- |
-| Apricot    | `#F9B75B` | accent; titles on espresso, bold covers     |
-| Mist       | `#C0CFE4` | secondary light background                  |
-| Oat        | `#E8DCC8` | primary light background                    |
-| Olive grey | `#7D8873` | midtone background, muted wordmark          |
-| Espresso   | `#473C35` | dark background, text on light backgrounds  |
+| Name     | Hex       | Role                                                                  |
+| -------- | --------- | --------------------------------------------------------------------- |
+| Words    | `#473C35` | text; the dark background (`bg-espresso`)                             |
+| Ground   | `#DEDAD2` | primary light background (`bg-ground`)                                |
+| Identity | `#9DB3BF` | blue-grey identity tone (the TWC logo's ground): `bg-haze`, soft badge washes, ambient dot fields |
+| Teal     | `#0CA09D` | stronger brand step on light surfaces (titles, wordmark, rules)       |
+| Sage     | `#8DC1B7` | stronger brand step on dark surfaces (titles, wordmark, rules)        |
+| Accent   | `#0F98B9` / `#006793` | accent pair; the deep step is `bg-deep` and small-caps accent text |
+
+The identity tone is deliberately ambient: it appears as translucent washes
+behind subheading badges and as fading dot fields on every slide, so the
+carousels share their ground with the logo.
 
 ## Structure
 
@@ -65,7 +70,7 @@ cta_key,closing_background,middle_subheading
 
 - `publish_at` uses `YYYY-MM-DD HH:MM`; its month decides the output folder.
 - Write `\n` inside a field for an explicit line break.
-- Backgrounds: `bg-oat`, `bg-mist`, `bg-apricot`, `bg-olive`, `bg-espresso`.
+- Backgrounds: `bg-ground`, `bg-haze`, `bg-espresso`, `bg-deep`.
 - `slide_number` orders the middle slides and must be unique per post. It is
   internal only — slide numbers are never displayed on a slide.
 - `middle_subheading` is an optional bold line (e.g. a person's name) placed

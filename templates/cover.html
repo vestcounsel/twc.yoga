@@ -6,8 +6,13 @@
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    --apricot:#f9b75b; --mist:#c0cfe4; --oat:#e8dcc8;
-    --olive:#7d8873; --espresso:#473c35;
+    /* TWC refined palette */
+    --words:#473c35;     /* text */
+    --ground:#dedad2;    /* primary light background */
+    --identity:#9db3bf;  /* blue-grey identity tone (logo ground) */
+    --teal:#0ca09d;      /* stronger brand step, light surfaces */
+    --sage:#8dc1b7;      /* stronger brand step, dark surfaces */
+    --deep:#006793;      /* accent, dark step */
     --ml:88px;                 /* left and right margin */
     --asc:0.968; --em:1.219;   /* Montserrat metrics, do not edit */
   }
@@ -17,13 +22,22 @@
     position:relative; width:1080px; height:1350px; overflow:hidden;
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
-    background:var(--espresso); color:var(--oat);
+    background:var(--words); color:var(--ground);
   }
-  .slide.bg-espresso{ background:var(--espresso); color:var(--oat);      }
-  .slide.bg-olive   { background:var(--olive);    color:var(--oat);      }
-  .slide.bg-apricot { background:var(--apricot);  color:var(--espresso); }
-  .slide.bg-oat     { background:var(--oat);      color:var(--espresso); }
-  .slide.bg-mist    { background:var(--mist);     color:var(--espresso); }
+  .slide.bg-espresso{ background:var(--words);    color:var(--ground); --dot:rgba(157,179,191,.28); }
+  .slide.bg-deep    { background:var(--deep);     color:var(--ground); --dot:rgba(157,179,191,.34); }
+  .slide.bg-haze    { background:var(--identity); color:var(--words);  --dot:rgba(222,218,210,.55); }
+  .slide.bg-ground  { background:var(--ground);   color:var(--words);  --dot:rgba(157,179,191,.55); }
+
+  /* Ambient identity: a soft dot field in the blue-grey identity tone,
+     fading out from the upper right so it never sits under the title. */
+  .slide::before{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background-image:radial-gradient(var(--dot, rgba(157,179,191,.3)) 3px, transparent 3.5px);
+    background-size:44px 44px; background-position:10px 10px;
+    -webkit-mask-image:radial-gradient(760px 760px at 84% 16%, #000 0%, transparent 72%);
+    mask-image:radial-gradient(760px 760px at 84% 16%, #000 0%, transparent 72%);
+  }
 
   .bl-top,.bl-bot{
     position:absolute; left:var(--ml); right:var(--ml); margin:0;
@@ -34,10 +48,10 @@
   .bl-bot{ bottom:calc((1350 - (var(--bl) + ((var(--lh) - var(--em))/2 + 0.251) * var(--fs))) * 1px); }
 
   .wordmark{ --fs:48; --lh:1; --bl:166.2;
-             letter-spacing:.105em; text-transform:uppercase; opacity:.42; }
-  .slide.bg-oat .wordmark,
-  .slide.bg-mist .wordmark,
-  .slide.bg-apricot .wordmark{ opacity:1; color:var(--olive); }
+             letter-spacing:.105em; text-transform:uppercase;
+             color:var(--sage); opacity:.85; }
+  .slide.bg-ground .wordmark{ opacity:1; color:var(--teal); }
+  .slide.bg-haze .wordmark  { opacity:1; color:var(--deep); }
 
   /* pre-wrap keeps explicit returns AND wraps long titles naturally.
      The script below holds 120px whenever the title fits on up to
@@ -50,7 +64,7 @@
 <!-- =======================================================================
      EDIT HERE. Change the bg- class, change the headline text.
      Line breaks are literal: press return where you want the line to break.
-     Backgrounds: bg-espresso  bg-olive  bg-apricot  bg-oat  bg-mist
+     Backgrounds: bg-espresso  bg-deep  bg-haze  bg-ground
      ======================================================================= -->
 
 <div class="slide {{BACKGROUND}}" data-template="cover">
@@ -67,7 +81,7 @@
   const slide = document.querySelector('.slide');
   const title = document.querySelector('.display');
   if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-espresso';
-  if (title.textContent === ph('TITLE')) title.textContent = 'Five contract mistakes\nfounders should avoid';
+  if (title.textContent === ph('TITLE')) title.textContent = 'The whole concept\nof yoga';
   /* Injected copy may carry "\n" as two characters; turn them into real
      newlines so multiline titles keep working under white-space:pre. */
   if (title.textContent.indexOf('\\n') !== -1){

@@ -6,8 +6,13 @@
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    --apricot:#f9b75b; --mist:#c0cfe4; --oat:#e8dcc8;
-    --olive:#7d8873; --espresso:#473c35;
+    /* TWC refined palette */
+    --words:#473c35;     /* text */
+    --ground:#dedad2;    /* primary light background */
+    --identity:#9db3bf;  /* blue-grey identity tone (logo ground) */
+    --teal:#0ca09d;      /* stronger brand step, light surfaces */
+    --sage:#8dc1b7;      /* stronger brand step, dark surfaces */
+    --deep:#006793;      /* accent, dark step */
     --ml:88px;                 /* left and right margin */
     --asc:0.968; --em:1.219;   /* Montserrat metrics, do not edit */
   }
@@ -18,11 +23,20 @@
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  .slide.bg-oat     { background:var(--oat);      color:var(--espresso); --bg:var(--oat);      --accent:var(--olive);    }
-  .slide.bg-mist    { background:var(--mist);     color:var(--espresso); --bg:var(--mist);     --accent:var(--espresso); }
-  .slide.bg-apricot { background:var(--apricot);  color:var(--espresso); --bg:var(--apricot);  --accent:var(--espresso); }
-  .slide.bg-olive   { background:var(--olive);    color:var(--oat);      --bg:var(--olive);    --accent:var(--oat);      }
-  .slide.bg-espresso{ background:var(--espresso); color:var(--oat);      --bg:var(--espresso); --accent:var(--apricot);  }
+  .slide.bg-ground  { background:var(--ground);   color:var(--words);  --bg:var(--ground);   --accent:var(--teal); --wash:rgba(157,179,191,.30); --dot:rgba(157,179,191,.5);  }
+  .slide.bg-haze    { background:var(--identity); color:var(--words);  --bg:var(--identity); --accent:var(--words); --wash:rgba(222,218,210,.42); --dot:rgba(222,218,210,.5);  }
+  .slide.bg-espresso{ background:var(--words);    color:var(--ground); --bg:var(--words);    --accent:var(--sage); --wash:rgba(157,179,191,.22); --dot:rgba(157,179,191,.24); }
+  .slide.bg-deep    { background:var(--deep);     color:var(--ground); --bg:var(--deep);     --accent:var(--sage); --wash:rgba(157,179,191,.26); --dot:rgba(157,179,191,.28); }
+
+  /* Ambient identity: a soft dot field in the blue-grey identity tone,
+     fading in from the lower right, well away from the copy. */
+  .slide::before{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background-image:radial-gradient(var(--dot, rgba(157,179,191,.3)) 3px, transparent 3.5px);
+    background-size:44px 44px; background-position:10px 10px;
+    -webkit-mask-image:radial-gradient(680px 680px at 90% 90%, #000 0%, transparent 72%);
+    mask-image:radial-gradient(680px 680px at 90% 90%, #000 0%, transparent 72%);
+  }
 
   /* Baseline anchoring. .bl-top pins the first baseline, .bl-bot the last. */
   .bl-top,.bl-bot{
@@ -40,8 +54,8 @@
      visual gap to the rule that the smaller title had). */
   .title{ --fs:60; --lh:1.35; --bl:368; letter-spacing:.083em; color:var(--accent); }
 
-  .rule{ position:absolute; left:var(--ml); width:514px; height:1px;
-         background:currentColor; opacity:.18; }
+  .rule{ position:absolute; left:var(--ml); width:514px; height:2px;
+         background:var(--accent); opacity:.5; }
   .r-top{ top:391px; }   /* sits clear of the title's descenders */
 
   /* Content flows top-down in normal document order, so the image can
@@ -51,9 +65,13 @@
   .content{ position:absolute; left:var(--ml); right:var(--ml); top:431px;
             bottom:88px; display:flex; flex-direction:column;
             align-items:flex-start; gap:24px; }
+  /* The subheading sits in a soft badge on the translucent identity wash,
+     so the data line reads as a brand element rather than a second body. */
   .subheading{ --fs:40; margin:0; font-size:calc(var(--fs) * 1px);
                line-height:1.0833; font-weight:700; white-space:pre-wrap;
-               align-self:stretch; }
+               align-self:flex-start; max-width:100%; box-sizing:border-box;
+               background:var(--wash); border-radius:999px;
+               padding:16px 32px; }
   .body{ --fs:40; margin:0; font-size:calc(var(--fs) * 1px);
          line-height:1.2; font-weight:400; white-space:pre-wrap;
          align-self:stretch; }
@@ -69,7 +87,7 @@
 
 <!-- =======================================================================
      EDIT HERE.
-     Backgrounds:  bg-oat  bg-mist  bg-apricot  bg-olive  bg-espresso
+     Backgrounds:  bg-ground  bg-haze  bg-espresso  bg-deep
      Never indent a continuation line. Use &amp;amp; for an ampersand.
 
      ILLUSTRATIONS. The generator fills the img src from the CSV with a
@@ -106,13 +124,13 @@
   const subheading = document.querySelector('.subheading');
   const body = document.querySelector('.body');
   const art = document.querySelector('.illustration');
-  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-oat';
-  if (title.textContent === ph('HEADING')) title.textContent = 'Use the correct entity name';
-  if (subheading.textContent === ph('SUBHEADING')) subheading.textContent = '';
-  if (body.textContent === ph('BODY')) body.textContent = 'The agreement should identify the exact company entering into the contract.';
+  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-ground';
+  if (title.textContent === ph('HEADING')) title.textContent = 'Breath sets the pace';
+  if (subheading.textContent === ph('SUBHEADING')) subheading.textContent = 'Slow Flow · Power · Advanced';
+  if (body.textContent === ph('BODY')) body.textContent = 'Each movement rides an inhale or an exhale. The breath leads, the body follows.';
   if (art.getAttribute('src') === ph('ILLUSTRATION_SRC')){
-    art.src = '../assets/illustrations/document.svg';
-    art.alt = 'Contract document illustration';
+    art.src = '';
+    art.alt = '';
   }
   if (art.getAttribute('alt') === ph('ILLUSTRATION_ALT')) art.alt = '';
   /* Injected copy may carry "\n" as two characters; turn them into real

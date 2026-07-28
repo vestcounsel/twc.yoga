@@ -7,28 +7,24 @@
     "heading": "Your mat\nis waiting",
     "subheading": "Book your first class"
   },
-  "yin": {
-    "heading": "Slow down\nwith us",
-    "subheading": "Book a Yin class"
+  "slow-flow": {
+    "heading": "Slow down,\ngo deeper",
+    "subheading": "Book a Slow Flow class"
   },
-  "vinyasa": {
-    "heading": "Move with\nyour breath",
-    "subheading": "Book a Vinyasa class"
+  "power": {
+    "heading": "Practice\nstrong",
+    "subheading": "Book a Power Vinyasa class"
   },
-  "private": {
-    "heading": "Make the\npractice yours",
-    "subheading": "Book a private lesson"
+  "advanced": {
+    "heading": "Take the\ndeep end",
+    "subheading": "Book the Advanced flow"
   },
-  "strength": {
-    "heading": "Build strength\nthat lasts",
-    "subheading": "Book a session"
+  "philosophy": {
+    "heading": "Live the\npractice",
+    "subheading": "Start on the mat"
   },
-  "whole": {
-    "heading": "Train the\nwhole body",
-    "subheading": "Build your week with us"
-  },
-  "coaching": {
-    "heading": "Change the\neveryday",
-    "subheading": "Book a discovery call"
+  "breath": {
+    "heading": "Breathe like\nit matters",
+    "subheading": "Book a class"
   }
 }

@@ -28,7 +28,7 @@ const OUTPUT_DIR = path.join(ROOT, 'public', 'social');
 const WIDTH = 1080;
 const HEIGHT = 1350;
 
-const BACKGROUNDS = ['bg-oat', 'bg-mist', 'bg-apricot', 'bg-olive', 'bg-espresso'];
+const BACKGROUNDS = ['bg-ground', 'bg-haze', 'bg-espresso', 'bg-deep'];
 
 const PREVIEW = process.argv.includes('--preview');
 const POST_FILTER = (() => {

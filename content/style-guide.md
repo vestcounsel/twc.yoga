@@ -3,6 +3,18 @@
 Distilled from the reviewed edits to the four Gaga trademark carousels
 (August 2026). These rules govern all future carousel drafting.
 
+## Brand voice
+
+- The Whole Concept teaches traditional yoga for today's life. The copy
+  honors the roots without diluting them, and never apologizes for depth.
+- The emphasis is on the **concept**, the idea behind the teaching, not
+  merely on the word "whole."
+- Balance in every carousel: tradition + creativity, depth + fun,
+  discipline + play, strength + awareness.
+- The classes are Slow Flow Vinyasa, Power Vinyasa, and Advanced Vinyasa
+  set to music. Never present the studio as fitness-only, watered-down,
+  or solemn.
+
 ## Punctuation
 
 - **Never use em dashes (—).** Replace with a comma, a period, or two

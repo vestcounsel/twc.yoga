@@ -27,6 +27,8 @@ carousels share their ground with the logo.
 ```
 social-content/
 ├── assets/illustrations/   SVG illustrations used on middle slides
+├── assets/photos/          photos placed inside slides (e.g. the bio portrait)
+├── assets/standalone-photos/  photos that run as standalone posts in the grid
 ├── templates/
 │   ├── cover.html          cover slide template
 │   ├── middle.html         middle slide template

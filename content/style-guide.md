@@ -1,4 +1,4 @@
-# Vest Counsel carousel copy style guide
+# TWC (The Whole Concept) carousel copy style guide
 
 Distilled from the reviewed edits to the four Gaga trademark carousels
 (August 2026). These rules govern all future carousel drafting.
@@ -41,7 +41,8 @@ Distilled from the reviewed edits to the four Gaga trademark carousels
 - Headline: a plain-language action statement ("Search before you
   brand"), not a themed restatement of the series.
 - Subheading: a short direct invitation ("Reach out today").
-- Contact block (phone, email, website) and the locked cat never change.
+- Closing slides carry no contact block or mascot artwork; the
+  TWC wordmark sign-off never changes.
 
 ## Sourcing discipline (unchanged)
 

@@ -2,7 +2,7 @@
   "name": "social-content",
   "version": "1.0.0",
   "private": true,
-  "description": "CSV-driven HTML-to-PNG carousel generator for Vest Counsel social posts",
+  "description": "CSV-driven HTML-to-PNG carousel generator for TWC (The Whole Concept) social posts",
   "scripts": {
     "generate": "node scripts/generate.js",
     "preview": "node scripts/generate.js --preview",

@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Vest Counsel middle slide</title>
+<title>TWC middle slide</title>
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    --ink:#0c0c0c; --paper:#ffffff; --red:#b32600;
-    --gray:#808080; --charcoal:#282828; --cream:#edeae3;
+    --apricot:#f9b75b; --mist:#c0cfe4; --oat:#e8dcc8;
+    --olive:#7d8873; --espresso:#473c35;
     --ml:88px;                 /* left and right margin */
     --asc:0.968; --em:1.219;   /* Montserrat metrics, do not edit */
   }
@@ -18,12 +18,11 @@
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  .slide.bg-paper   { background:var(--paper);    color:var(--ink);   --bg:var(--paper);    --accent:var(--red);   }
-  .slide.bg-cream   { background:var(--cream);    color:var(--ink);   --bg:var(--cream);    --accent:var(--red);   }
-  .slide.bg-ink     { background:var(--ink);      color:var(--paper); --bg:var(--ink);      --accent:var(--paper); }
-  .slide.bg-charcoal{ background:var(--charcoal); color:var(--paper); --bg:var(--charcoal); --accent:var(--paper); }
-  .slide.bg-gray    { background:var(--gray);     color:var(--paper); --bg:var(--gray);     --accent:var(--paper); }
-  .slide.bg-red     { background:var(--red);      color:var(--paper); --bg:var(--red);      --accent:var(--paper); }
+  .slide.bg-oat     { background:var(--oat);      color:var(--espresso); --bg:var(--oat);      --accent:var(--olive);    }
+  .slide.bg-mist    { background:var(--mist);     color:var(--espresso); --bg:var(--mist);     --accent:var(--espresso); }
+  .slide.bg-apricot { background:var(--apricot);  color:var(--espresso); --bg:var(--apricot);  --accent:var(--espresso); }
+  .slide.bg-olive   { background:var(--olive);    color:var(--oat);      --bg:var(--olive);    --accent:var(--oat);      }
+  .slide.bg-espresso{ background:var(--espresso); color:var(--oat);      --bg:var(--espresso); --accent:var(--apricot);  }
 
   /* Baseline anchoring. .bl-top pins the first baseline, .bl-bot the last. */
   .bl-top,.bl-bot{
@@ -70,7 +69,7 @@
 
 <!-- =======================================================================
      EDIT HERE.
-     Backgrounds:  bg-paper  bg-cream  bg-ink  bg-charcoal  bg-gray  bg-red
+     Backgrounds:  bg-oat  bg-mist  bg-apricot  bg-olive  bg-espresso
      Never indent a continuation line. Use &amp;amp; for an ampersand.
 
      ILLUSTRATIONS. The generator fills the img src from the CSV with a
@@ -107,7 +106,7 @@
   const subheading = document.querySelector('.subheading');
   const body = document.querySelector('.body');
   const art = document.querySelector('.illustration');
-  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-cream';
+  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-oat';
   if (title.textContent === ph('HEADING')) title.textContent = 'Use the correct entity name';
   if (subheading.textContent === ph('SUBHEADING')) subheading.textContent = '';
   if (body.textContent === ph('BODY')) body.textContent = 'The agreement should identify the exact company entering into the contract.';

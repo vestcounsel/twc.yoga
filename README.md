@@ -7,6 +7,16 @@ each slide in Chromium, and the result is final 1080 × 1350 PNG files.
 This is an **HTML + SVG assets → PNG** workflow. The HTML is rendered and
 screenshotted; nothing is converted to SVG along the way.
 
+## Brand palette (TWC · The Whole Concept)
+
+| Name       | Hex       | Role                                        |
+| ---------- | --------- | ------------------------------------------- |
+| Apricot    | `#F9B75B` | accent; titles on espresso, bold covers     |
+| Mist       | `#C0CFE4` | secondary light background                  |
+| Oat        | `#E8DCC8` | primary light background                    |
+| Olive grey | `#7D8873` | midtone background, muted wordmark          |
+| Espresso   | `#473C35` | dark background, text on light backgrounds  |
+
 ## Structure
 
 ```
@@ -55,8 +65,7 @@ cta_key,closing_background,middle_subheading
 
 - `publish_at` uses `YYYY-MM-DD HH:MM`; its month decides the output folder.
 - Write `\n` inside a field for an explicit line break.
-- Backgrounds: `bg-paper`, `bg-cream`, `bg-ink`, `bg-charcoal`, `bg-gray`, `bg-red`.
-  Covers never use `bg-cream` — the generator rejects it.
+- Backgrounds: `bg-oat`, `bg-mist`, `bg-apricot`, `bg-olive`, `bg-espresso`.
 - `slide_number` orders the middle slides and must be unique per post. It is
   internal only — slide numbers are never displayed on a slide.
 - `middle_subheading` is an optional bold line (e.g. a person's name) placed

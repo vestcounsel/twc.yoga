@@ -28,7 +28,7 @@ const OUTPUT_DIR = path.join(ROOT, 'public', 'social');
 const WIDTH = 1080;
 const HEIGHT = 1350;
 
-const BACKGROUNDS = ['bg-paper', 'bg-cream', 'bg-ink', 'bg-charcoal', 'bg-gray', 'bg-red'];
+const BACKGROUNDS = ['bg-oat', 'bg-mist', 'bg-apricot', 'bg-olive', 'bg-espresso'];
 
 const PREVIEW = process.argv.includes('--preview');
 const POST_FILTER = (() => {
@@ -139,12 +139,6 @@ function validateCarousel(postId, rows, ctaLibrary) {
       fail(`${where}: ${field} "${value}" is not supported. Use one of: ${BACKGROUNDS.join(', ')}.`);
     }
   }
-  // Brand rule: covers never use cream.
-  if (first.cover_background === 'bg-cream') {
-    fail(`${where}: bg-cream is not allowed as a cover background. ` +
-         'Use bg-paper, bg-ink, bg-charcoal, bg-gray, or bg-red.');
-  }
-
   const ctaKey = first.cta_key;
   if (!ctaLibrary[ctaKey]) {
     fail(`${where}: cta_key "${ctaKey}" does not exist in content/cta-library.json. ` +
@@ -226,30 +220,14 @@ function buildSlides(postId, rows, templates, ctaLibrary) {
     CTA_HEADING: escapeHtml(cta.heading),
     CTA_SUBHEADING: escapeHtml(cta.subheading),
   });
-  assertCatUnchanged(templates.closing, closingHtml, postId);
   slides.push({
     name: 'closing',
     template: 'closing',
     html: closingHtml,
-    checks: ['.headline', '.subheading', '.phone', '.email', '.web', '.cat'],
+    checks: ['.headline', '.subheading', '.wordmark'],
   });
 
   return slides;
-}
-
-// The cat is a locked brand asset: whatever background the CSV picks, the
-// generated markup must carry the cat SVG exactly as stored in the template.
-function assertCatUnchanged(templateHtml, generatedHtml, postId) {
-  const catOf = (html) => {
-    const match = html.match(/<svg class="cat"[\s\S]*?<\/svg>/);
-    return match ? match[0] : null;
-  };
-  const original = catOf(templateHtml);
-  const generated = catOf(generatedHtml);
-  if (!original || generated !== original) {
-    fail(`post "${postId}": the closing-slide cat asset would be modified during generation. ` +
-         'The cat is locked and must be inserted exactly as stored in templates/closing.html.');
-  }
 }
 
 async function renderSlide(page, htmlFile, job) {

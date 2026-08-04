@@ -6,13 +6,14 @@
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    /* TWC refined palette */
-    --words:#473c35;     /* text */
-    --ground:#dedad2;    /* primary light background */
-    --identity:#9db3bf;  /* blue-grey identity tone (logo ground) */
-    --teal:#0ca09d;      /* stronger brand step, light surfaces */
-    --sage:#8dc1b7;      /* stronger brand step, dark surfaces */
-    --deep:#006793;      /* accent, dark step */
+    /* TWC palette (2026 refresh) */
+    --words:#0b3954;     /* text, dark navy */
+    --ground:#f5deb3;    /* primary light background, wheat */
+    --identity:#aed6f1;  /* sky blue identity tone */
+    --teal:#0077b6;      /* ocean blue accent, light surfaces */
+    --sage:#aed6f1;      /* sky blue accent, dark surfaces */
+    --deep:#0077b6;      /* ocean blue surface and accent */
+    --coral:#ff6f61;     /* coral surface (legacy class bg-espresso) */
     --ml:88px;                 /* left and right margin */
     --asc:0.968; --em:1.219;   /* Montserrat metrics, do not edit */
   }
@@ -23,10 +24,10 @@
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  .slide.bg-ground  { background:var(--ground);   color:var(--words);  --bg:var(--ground);   --accent:var(--deep); --dot:rgba(157,179,191,.5);  }
-  .slide.bg-haze    { background:var(--identity); color:var(--words);  --bg:var(--identity); --accent:var(--deep); --dot:rgba(222,218,210,.5);  }
-  .slide.bg-espresso{ background:var(--words);    color:var(--ground); --bg:var(--words);    --accent:var(--sage); --dot:rgba(157,179,191,.24); }
-  .slide.bg-deep    { background:var(--deep);     color:var(--ground); --bg:var(--deep);     --accent:var(--sage); --dot:rgba(157,179,191,.28); }
+  .slide.bg-ground  { background:var(--ground);   color:var(--words);  --bg:var(--ground);   --accent:var(--teal);  --dot:rgba(0,119,182,.25);   }
+  .slide.bg-haze    { background:var(--identity); color:var(--words);  --bg:var(--identity); --accent:var(--teal);  --dot:rgba(245,222,179,.6);  }
+  .slide.bg-espresso{ background:var(--coral);    color:var(--words);  --bg:var(--coral);    --accent:var(--words); --dot:rgba(245,222,179,.45); }
+  .slide.bg-deep    { background:var(--deep);     color:var(--ground); --bg:var(--deep);     --accent:var(--sage);  --dot:rgba(174,214,241,.4);  }
 
   /* Ambient identity: a soft dot field in the blue-grey identity tone,
      fading in from the lower right, clear of headline and wordmark. */

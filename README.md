@@ -9,18 +9,18 @@ screenshotted; nothing is converted to SVG along the way.
 
 ## Brand palette (TWC · The Whole Concept)
 
-| Name     | Hex       | Role                                                                  |
-| -------- | --------- | --------------------------------------------------------------------- |
-| Words    | `#473C35` | text; the dark background (`bg-espresso`)                             |
-| Ground   | `#DEDAD2` | primary light background (`bg-ground`)                                |
-| Identity | `#9DB3BF` | blue-grey identity tone (the TWC logo's ground): `bg-haze`, soft badge washes, ambient dot fields |
-| Teal     | `#0CA09D` | stronger brand step on light surfaces (titles, wordmark, rules)       |
-| Sage     | `#8DC1B7` | stronger brand step on dark surfaces (titles, wordmark, rules)        |
-| Accent   | `#0F98B9` / `#006793` | accent pair; the deep step is `bg-deep` and small-caps accent text |
+| Name  | Hex       | Role                                                                 |
+| ----- | --------- | -------------------------------------------------------------------- |
+| Navy  | `#0B3954` | text on light and coral surfaces; accents on coral                    |
+| Ocean | `#0077B6` | blue surface (`bg-deep`); accents on light surfaces                   |
+| Wheat | `#F5DEB3` | primary light background (`bg-ground`); text on ocean surfaces        |
+| Coral | `#FF6F61` | warm surface (`bg-espresso` — the class name is legacy, it now renders coral) |
+| Sky   | `#AED6F1` | light blue surface (`bg-haze`); accents on ocean surfaces; washes and dot fields |
 
-The identity tone is deliberately ambient: it appears as translucent washes
-behind subheading badges and as fading dot fields on every slide, so the
-carousels share their ground with the logo.
+The CSV background names (`bg-ground`, `bg-haze`, `bg-espresso`, `bg-deep`)
+are unchanged so existing rows keep working; only the colors they render
+changed. Sky and wheat also appear as translucent washes behind subheading
+badges and as fading dot fields on every slide.
 
 ## Structure
 

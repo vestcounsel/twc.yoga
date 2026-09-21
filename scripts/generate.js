@@ -28,8 +28,9 @@ const OUTPUT_DIR = path.join(ROOT, 'public', 'social');
 const WIDTH = 1080;
 const HEIGHT = 1350;
 
-// The four surfaces of the 2026 palette, in the order a carousel rotates
-// through them: teal #0CA09D, sage #8DC1B7, deep #006793, mist #9DB3BF.
+// The four surfaces of the 2026 palette. One surface carries a whole
+// carousel; the surface rotates from post to post in this order:
+// teal #0CA09D, sage #8DC1B7, deep #006793, mist #9DB3BF.
 const BACKGROUNDS = ['bg-teal', 'bg-sage', 'bg-deep', 'bg-mist'];
 
 // Surfaces from the previous palette, mapped to their replacement so a stale
@@ -40,8 +41,8 @@ const RETIRED_BACKGROUNDS = {
   'bg-espresso': 'bg-teal',
 };
 
-// Sage and mist are only 1.08:1 apart, so two slides running them back to
-// back read as one unbroken surface. They never sit next to each other.
+// Sage and mist are only 1.08:1 apart, so two posts running them back to
+// back read as the same color in the feed. They never follow each other.
 const NEVER_ADJACENT = [['bg-sage', 'bg-mist']];
 
 const PREVIEW = process.argv.includes('--preview');
@@ -139,24 +140,53 @@ function checkBackground(where, field, value) {
   fail(`${where}: ${field} "${value}" is not supported. Use one of: ${BACKGROUNDS.join(', ')}.`);
 }
 
-// Backgrounds alternate: no two consecutive slides in a carousel share a
-// surface, and sage never touches mist. The sequence runs cover, middles in
-// slide_number order, closing.
-function validateRotation(postId, sequence) {
-  for (let i = 1; i < sequence.length; i++) {
-    const prev = sequence[i - 1];
-    const here = sequence[i];
-    if (prev.background === here.background) {
-      fail(`post "${postId}": ${prev.label} and ${here.label} both use ` +
-           `"${here.background}". Backgrounds must alternate between slides.`);
+// One surface carries the whole carousel: the cover, every middle slide, and
+// the closing all name the same background. The surface changes between
+// posts, not within one.
+function validateCarouselSurface(postId, first, middles) {
+  const surface = first.cover_background;
+  const offenders = [];
+  middles.forEach((row) => {
+    if (row.middle_background !== surface) {
+      offenders.push(`middle slide ${row.slide_number} ("${row.middle_background}")`);
+    }
+  });
+  if (first.closing_background !== surface) {
+    offenders.push(`the closing ("${first.closing_background}")`);
+  }
+  if (offenders.length) {
+    fail(`post "${postId}": every slide in a carousel shares one surface, but ` +
+         `the cover is "${surface}" while ${offenders.join(', ')}. ` +
+         `Set cover_background, middle_background, and closing_background to the same value.`);
+  }
+}
+
+// Across the feed, consecutive posts must not repeat a surface, and sage must
+// not follow mist or the other way round.
+function validateFeedRotation(carousels) {
+  const posts = [...carousels.entries()]
+    .map(([postId, rows]) => ({
+      postId,
+      when: rows[0].publish_at || '',
+      surface: rows[0].cover_background,
+    }))
+    .sort((a, b) => a.when.localeCompare(b.when));
+
+  for (let i = 1; i < posts.length; i++) {
+    const prev = posts[i - 1];
+    const here = posts[i];
+    if (prev.surface === here.surface) {
+      fail(`posts "${prev.postId}" and "${here.postId}" publish back to back and ` +
+           `both use "${here.surface}". The surface must change between posts.`);
     }
     const clash = NEVER_ADJACENT.some(
-      ([a, b]) => (prev.background === a && here.background === b) ||
-                  (prev.background === b && here.background === a)
+      ([a, b]) => (prev.surface === a && here.surface === b) ||
+                  (prev.surface === b && here.surface === a)
     );
     if (clash) {
-      fail(`post "${postId}": ${prev.label} ("${prev.background}") and ${here.label} ` +
-           `("${here.background}") are too close in tone to sit next to each other.`);
+      fail(`posts "${prev.postId}" ("${prev.surface}") and "${here.postId}" ` +
+           `("${here.surface}") publish back to back and are too close in tone. ` +
+           `Put another surface between them.`);
     }
   }
 }
@@ -208,14 +238,7 @@ function validateCarousel(postId, rows, ctaLibrary) {
   }
 
   const ordered = [...rows].sort((a, b) => Number(a.slide_number) - Number(b.slide_number));
-  validateRotation(postId, [
-    { label: 'the cover', background: first.cover_background },
-    ...ordered.map((row) => ({
-      label: `middle slide ${row.slide_number}`,
-      background: row.middle_background,
-    })),
-    { label: 'the closing', background: first.closing_background },
-  ]);
+  validateCarouselSurface(postId, first, ordered);
 }
 
 /* -------------------------------------------------------------- rendering */
@@ -414,6 +437,7 @@ async function main() {
   for (const [postId, postRows] of carousels) {
     validateCarousel(postId, postRows, ctaLibrary);
   }
+  validateFeedRotation(carousels);
 
   if (POST_FILTER) {
     if (!carousels.has(POST_FILTER)) {

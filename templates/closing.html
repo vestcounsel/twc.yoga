@@ -6,9 +6,10 @@
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    /* TWC surfaces (2026 palette). Four backgrounds, rotated across a
-       carousel in this order: teal, sage, deep, mist. Sage and mist are
-       never adjacent: they sit 1.08:1 apart and read as the same color. */
+    /* TWC surfaces (2026 palette). One surface carries a whole carousel;
+       the surface rotates from post to post: teal, sage, deep, mist.
+       Sage and mist never run back to back: they sit 1.08:1 apart and read
+       as the same color two posts running. */
     --words:#0b3954;     /* text on teal, sage, and mist */
     --teal:#0ca09d;      /* surface: bg-teal */
     --sage:#8dc1b7;      /* surface: bg-sage; accent on teal, mist, deep */
@@ -25,20 +26,10 @@
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  .slide.bg-teal    { background:var(--teal);     color:var(--words);  --bg:var(--teal);     --accent:var(--words); --dot:rgba(141,193,183,.45); }
-  .slide.bg-sage    { background:var(--sage);     color:var(--words);  --bg:var(--sage);     --accent:var(--deep);  --dot:rgba(0,103,147,.28);   }
-  .slide.bg-mist    { background:var(--mist);     color:var(--words);  --bg:var(--mist);     --accent:var(--words); --dot:rgba(0,103,147,.25);   }
-  .slide.bg-deep    { background:var(--deep);     color:var(--light);  --bg:var(--deep);     --accent:var(--sage);  --dot:rgba(141,193,183,.4);  }
-
-  /* Ambient identity: a soft dot field in the blue-grey identity tone,
-     fading in from the lower right, clear of headline and wordmark. */
-  .slide::before{
-    content:''; position:absolute; inset:0; pointer-events:none;
-    background-image:radial-gradient(var(--dot, rgba(157,179,191,.3)) 3px, transparent 3.5px);
-    background-size:44px 44px; background-position:10px 10px;
-    -webkit-mask-image:radial-gradient(640px 640px at 88% 74%, #000 0%, transparent 72%);
-    mask-image:radial-gradient(640px 640px at 88% 74%, #000 0%, transparent 72%);
-  }
+  .slide.bg-teal    { background:var(--teal);     color:var(--words);  --bg:var(--teal);     --accent:var(--words); }
+  .slide.bg-sage    { background:var(--sage);     color:var(--words);  --bg:var(--sage);     --accent:var(--deep); }
+  .slide.bg-mist    { background:var(--mist);     color:var(--words);  --bg:var(--mist);     --accent:var(--words); }
+  .slide.bg-deep    { background:var(--deep);     color:var(--light);  --bg:var(--deep);     --accent:var(--sage); }
 
   /* Baseline anchoring. .bl-top pins the first baseline, .bl-bot the last. */
   .bl-top,.bl-bot{

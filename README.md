@@ -20,18 +20,22 @@ rules; keep the two in step.
 | `bg-deep` | `#006793` | deep | light `#F5DEB3` | sage `#8DC1B7` |
 | `bg-mist` | `#9DB3BF` | mist | navy `#0B3954`  | navy `#0B3954` |
 
-Backgrounds **alternate**, rotating `bg-teal → bg-sage → bg-deep → bg-mist`
-across the cover, the middle slides in order, and the closing. Two slides in a
-row never share a surface, and sage never sits next to mist (they are 1.08:1
-apart and read as one color). `npm run generate` fails if either rule is
-broken.
+**A carousel is a single color.** The cover, every middle slide, and the
+closing sit on the same surface, so `cover_background`, `middle_background`,
+and `closing_background` all carry the same value on every row of a post.
+
+**The color changes from post to post**, walking
+`bg-teal → bg-sage → bg-deep → bg-mist` in publish order. Consecutive posts
+never repeat a surface, and sage never follows mist (they are 1.08:1 apart and
+read as the same color two posts running). `npm run generate` fails if either
+rule is broken.
 
 The previous palette's `bg-ground`, `bg-haze`, and `bg-espresso` are retired
 along with coral `#FF6F61`. A CSV row still using one of those names stops
 generation with the replacement named in the error.
 
-Sage and the other surfaces also appear as translucent washes behind
-subheading badges and as fading dot fields on every slide.
+Surfaces are flat: no dot fields, no corner texture, no gradients. The only
+tint is the translucent wash behind a middle slide's subheading badge.
 
 ## Structure
 
@@ -83,8 +87,9 @@ cta_key,closing_background,middle_subheading
 
 - `publish_at` uses `YYYY-MM-DD HH:MM`; its month decides the output folder.
 - Write `\n` inside a field for an explicit line break.
-- Backgrounds: `bg-teal`, `bg-sage`, `bg-deep`, `bg-mist`. They alternate;
-  see the rotation rules in `CLAUDE.md`.
+- Backgrounds: `bg-teal`, `bg-sage`, `bg-deep`, `bg-mist`. One per carousel,
+  the same value in all three background columns; the surface rotates between
+  posts. See the rules in `CLAUDE.md`.
 - `slide_number` orders the middle slides and must be unique per post. It is
   internal only — slide numbers are never displayed on a slide.
 - `middle_subheading` is an optional bold line (e.g. a person's name) placed

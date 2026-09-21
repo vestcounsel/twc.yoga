@@ -19,26 +19,32 @@ There is no coral and no espresso surface. The old `bg-ground`, `bg-haze`,
 and `bg-espresso` classes are retired; the generator rejects them by name
 and points at the replacement.
 
-## Backgrounds alternate
+## One surface per carousel, rotating between posts
 
-Backgrounds rotate through the four surfaces in this order:
+**A carousel is a single color.** The cover, every middle slide, and the
+closing all sit on the same surface. The color does not change within a post.
+
+**The color changes from post to post**, walking the rotation in publish
+order:
 
 ```
 bg-teal  →  bg-sage  →  bg-deep  →  bg-mist  →  (wraps to bg-teal)
 ```
 
-The rotation runs across the whole carousel in slide order: cover, then each
-middle slide by `slide_number`, then the closing. Each carousel starts one
-step further along the rotation than the one published before it, so the feed
-does not open on the same surface every time.
+So the feed alternates, one solid color per carousel, while each carousel
+reads as one piece.
 
-Two rules are enforced by `scripts/generate.js` and generation fails if either
-is broken:
+In the CSV this means `cover_background`, `middle_background`, and
+`closing_background` all carry the same value on every row of a post.
 
-1. **No two consecutive slides share a surface.**
-2. **Sage never touches mist.** They are only 1.08:1 apart and read as one
-   unbroken surface across a slide change. This is why `bg-deep` sits between
-   them in the rotation rather than at the end.
+Two rules are enforced by `scripts/generate.js`, and generation fails if
+either is broken:
+
+1. **Every slide in a carousel names the same surface.**
+2. **Consecutive posts differ, and sage never follows mist or the reverse.**
+   Sage and mist are only 1.08:1 apart and read as the same color two posts
+   running, which is why deep sits between them in the rotation rather than
+   at the end.
 
 ## Text and accent per surface
 
@@ -57,13 +63,16 @@ clears 3:1 at the display sizes these templates use (the smallest body copy is
 The accent drives the middle-slide title and rule, and the cover and closing
 wordmark. On every surface the wordmark is full opacity.
 
-Dot fields and subheading washes are drawn from the same four surfaces at low
-alpha, never from a color outside the palette.
+## Surfaces are flat
+
+No dot fields, no corner texture, no gradients. A slide is one solid color.
+The only tint anywhere is the translucent wash behind a middle slide's
+subheading badge, drawn from the palette at low alpha.
 
 ## Adding a color
 
 Don't. If a new surface is genuinely needed, it has to clear 3:1 against navy
 or against `#F5DEB3`, and it has to sit at least 1.5:1 away from every surface
-it can be adjacent to in the rotation. Add it to the table above, to the
-`:root` block in all three templates, and to `BACKGROUNDS` in
-`scripts/generate.js` in the same change.
+it can follow in the rotation. Add it to the table above, to the `:root` block
+in all three templates, and to `BACKGROUNDS` in `scripts/generate.js` in the
+same change.

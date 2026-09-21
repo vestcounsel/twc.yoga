@@ -28,7 +28,21 @@ const OUTPUT_DIR = path.join(ROOT, 'public', 'social');
 const WIDTH = 1080;
 const HEIGHT = 1350;
 
-const BACKGROUNDS = ['bg-ground', 'bg-haze', 'bg-espresso', 'bg-deep'];
+// The four surfaces of the 2026 palette, in the order a carousel rotates
+// through them: teal #0CA09D, sage #8DC1B7, deep #006793, mist #9DB3BF.
+const BACKGROUNDS = ['bg-teal', 'bg-sage', 'bg-deep', 'bg-mist'];
+
+// Surfaces from the previous palette, mapped to their replacement so a stale
+// CSV row fails with a fix rather than a bare "not supported".
+const RETIRED_BACKGROUNDS = {
+  'bg-ground': 'bg-sage',
+  'bg-haze': 'bg-mist',
+  'bg-espresso': 'bg-teal',
+};
+
+// Sage and mist are only 1.08:1 apart, so two slides running them back to
+// back read as one unbroken surface. They never sit next to each other.
+const NEVER_ADJACENT = [['bg-sage', 'bg-mist']];
 
 const PREVIEW = process.argv.includes('--preview');
 const POST_FILTER = (() => {
@@ -116,6 +130,37 @@ function loadTemplates() {
 
 /* ------------------------------------------------------------- validation */
 
+function checkBackground(where, field, value) {
+  if (BACKGROUNDS.includes(value)) return;
+  if (RETIRED_BACKGROUNDS[value]) {
+    fail(`${where}: ${field} "${value}" was retired with the old palette. ` +
+         `Use "${RETIRED_BACKGROUNDS[value]}" instead.`);
+  }
+  fail(`${where}: ${field} "${value}" is not supported. Use one of: ${BACKGROUNDS.join(', ')}.`);
+}
+
+// Backgrounds alternate: no two consecutive slides in a carousel share a
+// surface, and sage never touches mist. The sequence runs cover, middles in
+// slide_number order, closing.
+function validateRotation(postId, sequence) {
+  for (let i = 1; i < sequence.length; i++) {
+    const prev = sequence[i - 1];
+    const here = sequence[i];
+    if (prev.background === here.background) {
+      fail(`post "${postId}": ${prev.label} and ${here.label} both use ` +
+           `"${here.background}". Backgrounds must alternate between slides.`);
+    }
+    const clash = NEVER_ADJACENT.some(
+      ([a, b]) => (prev.background === a && here.background === b) ||
+                  (prev.background === b && here.background === a)
+    );
+    if (clash) {
+      fail(`post "${postId}": ${prev.label} ("${prev.background}") and ${here.label} ` +
+           `("${here.background}") are too close in tone to sit next to each other.`);
+    }
+  }
+}
+
 function validateCarousel(postId, rows, ctaLibrary) {
   const where = `post "${postId}"`;
   const first = rows[0];
@@ -131,14 +176,8 @@ function validateCarousel(postId, rows, ctaLibrary) {
 
   if (!first.cover_title) fail(`${where}: cover_title is empty.`);
 
-  for (const [field, value] of [
-    ['cover_background', first.cover_background],
-    ['closing_background', first.closing_background],
-  ]) {
-    if (!BACKGROUNDS.includes(value)) {
-      fail(`${where}: ${field} "${value}" is not supported. Use one of: ${BACKGROUNDS.join(', ')}.`);
-    }
-  }
+  checkBackground(where, 'cover_background', first.cover_background);
+  checkBackground(where, 'closing_background', first.closing_background);
   const ctaKey = first.cta_key;
   if (!ctaLibrary[ctaKey]) {
     fail(`${where}: cta_key "${ctaKey}" does not exist in content/cta-library.json. ` +
@@ -159,10 +198,7 @@ function validateCarousel(postId, rows, ctaLibrary) {
     const slideWhere = `${where}, middle slide ${number}`;
     if (!row.middle_heading) fail(`${slideWhere}: middle_heading is empty.`);
     if (!row.middle_body) fail(`${slideWhere}: middle_body is empty.`);
-    if (!BACKGROUNDS.includes(row.middle_background)) {
-      fail(`${slideWhere}: middle_background "${row.middle_background}" is not supported. ` +
-           `Use one of: ${BACKGROUNDS.join(', ')}.`);
-    }
+    checkBackground(slideWhere, 'middle_background', row.middle_background);
     if (row.middle_illustration) {
       const file = resolveImage(row.middle_illustration);
       if (!fs.existsSync(file)) {
@@ -170,6 +206,16 @@ function validateCarousel(postId, rows, ctaLibrary) {
       }
     }
   }
+
+  const ordered = [...rows].sort((a, b) => Number(a.slide_number) - Number(b.slide_number));
+  validateRotation(postId, [
+    { label: 'the cover', background: first.cover_background },
+    ...ordered.map((row) => ({
+      label: `middle slide ${row.slide_number}`,
+      background: row.middle_background,
+    })),
+    { label: 'the closing', background: first.closing_background },
+  ]);
 }
 
 /* -------------------------------------------------------------- rendering */

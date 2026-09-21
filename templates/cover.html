@@ -6,14 +6,15 @@
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    /* TWC palette (2026 refresh) */
-    --words:#0b3954;     /* text, dark navy */
-    --ground:#f5deb3;    /* primary light background, wheat */
-    --identity:#aed6f1;  /* sky blue identity tone */
-    --teal:#0077b6;      /* ocean blue accent, light surfaces */
-    --sage:#aed6f1;      /* sky blue accent, dark surfaces */
-    --deep:#0077b6;      /* ocean blue surface and accent */
-    --coral:#ff6f61;     /* coral surface (legacy class bg-espresso) */
+    /* TWC surfaces (2026 palette). Four backgrounds, rotated across a
+       carousel in this order: teal, sage, deep, mist. Sage and mist are
+       never adjacent: they sit 1.08:1 apart and read as the same color. */
+    --words:#0b3954;     /* text on teal, sage, and mist */
+    --teal:#0ca09d;      /* surface: bg-teal */
+    --sage:#8dc1b7;      /* surface: bg-sage; accent on teal, mist, deep */
+    --mist:#9db3bf;      /* surface: bg-mist */
+    --deep:#006793;      /* surface: bg-deep; accent on sage */
+    --light:#f5deb3;     /* text on the deep surface */
     --ml:88px;                 /* left and right margin */
     --asc:0.968; --em:1.219;   /* Montserrat metrics, do not edit */
   }
@@ -23,12 +24,12 @@
     position:relative; width:1080px; height:1350px; overflow:hidden;
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
-    background:var(--words); color:var(--ground);
+    background:var(--words); color:var(--light);
   }
-  .slide.bg-espresso{ background:var(--coral);    color:var(--words);  --dot:rgba(245,222,179,.45); }
-  .slide.bg-deep    { background:var(--deep);     color:var(--ground); --dot:rgba(174,214,241,.4);  }
-  .slide.bg-haze    { background:var(--identity); color:var(--words);  --dot:rgba(245,222,179,.6);  }
-  .slide.bg-ground  { background:var(--ground);   color:var(--words);  --dot:rgba(0,119,182,.25);   }
+  .slide.bg-teal    { background:var(--teal);     color:var(--words);  --dot:rgba(141,193,183,.45); }
+  .slide.bg-sage    { background:var(--sage);     color:var(--words);  --dot:rgba(0,103,147,.28);   }
+  .slide.bg-mist    { background:var(--mist);     color:var(--words);  --dot:rgba(0,103,147,.25);   }
+  .slide.bg-deep    { background:var(--deep);     color:var(--light);  --dot:rgba(141,193,183,.4);  }
 
   /* Ambient identity: a soft dot field in the blue-grey identity tone,
      fading out from the upper right so it never sits under the title. */
@@ -51,9 +52,10 @@
   .wordmark{ --fs:48; --lh:1; --bl:166.2;
              letter-spacing:.105em; text-transform:uppercase;
              color:var(--sage); opacity:.85; }
-  .slide.bg-ground .wordmark{ opacity:1; color:var(--teal); }
-  .slide.bg-haze .wordmark  { opacity:1; color:var(--deep); }
-  .slide.bg-espresso .wordmark{ opacity:1; color:var(--words); }
+  .slide.bg-teal .wordmark{ opacity:1; color:var(--words); }
+  .slide.bg-sage .wordmark{ opacity:1; color:var(--deep);  }
+  .slide.bg-mist .wordmark{ opacity:1; color:var(--words); }
+  .slide.bg-deep .wordmark{ opacity:1; color:var(--sage);  }
 
   /* pre-wrap keeps explicit returns AND wraps long titles naturally.
      The script below holds 120px whenever the title fits on up to
@@ -66,7 +68,7 @@
 <!-- =======================================================================
      EDIT HERE. Change the bg- class, change the headline text.
      Line breaks are literal: press return where you want the line to break.
-     Backgrounds: bg-espresso  bg-deep  bg-haze  bg-ground
+     Backgrounds:  bg-teal  bg-sage  bg-deep  bg-mist
      ======================================================================= -->
 
 <div class="slide {{BACKGROUND}}" data-template="cover">
@@ -82,7 +84,7 @@
   const ph = name => '{{' + name + '}}';
   const slide = document.querySelector('.slide');
   const title = document.querySelector('.display');
-  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-espresso';
+  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-teal';
   if (title.textContent === ph('TITLE')) title.textContent = 'The whole concept\nof yoga';
   /* Injected copy may carry "\n" as two characters; turn them into real
      newlines so multiline titles keep working under white-space:pre. */

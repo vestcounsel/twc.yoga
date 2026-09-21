@@ -9,18 +9,29 @@ screenshotted; nothing is converted to SVG along the way.
 
 ## Brand palette (TWC · The Whole Concept)
 
-| Name  | Hex       | Role                                                                 |
-| ----- | --------- | -------------------------------------------------------------------- |
-| Navy  | `#0B3954` | text on light and coral surfaces; accents on coral                    |
-| Ocean | `#0077B6` | blue surface (`bg-deep`); accents on light surfaces                   |
-| Wheat | `#F5DEB3` | primary light background (`bg-ground`); text on ocean surfaces        |
-| Coral | `#FF6F61` | warm surface (`bg-espresso` — the class name is legacy, it now renders coral) |
-| Sky   | `#AED6F1` | light blue surface (`bg-haze`); accents on ocean surfaces; washes and dot fields |
+Four background surfaces, and the text and accent color each one carries.
+`CLAUDE.md` holds the authoritative version of this table plus the rotation
+rules; keep the two in step.
 
-The CSV background names (`bg-ground`, `bg-haze`, `bg-espresso`, `bg-deep`)
-are unchanged so existing rows keep working; only the colors they render
-changed. Sky and wheat also appear as translucent washes behind subheading
-badges and as fading dot fields on every slide.
+| Class     | Hex       | Name | Text on it      | Accent on it   |
+| --------- | --------- | ---- | --------------- | -------------- |
+| `bg-teal` | `#0CA09D` | teal | navy `#0B3954`  | navy `#0B3954` |
+| `bg-sage` | `#8DC1B7` | sage | navy `#0B3954`  | deep `#006793` |
+| `bg-deep` | `#006793` | deep | light `#F5DEB3` | sage `#8DC1B7` |
+| `bg-mist` | `#9DB3BF` | mist | navy `#0B3954`  | navy `#0B3954` |
+
+Backgrounds **alternate**, rotating `bg-teal → bg-sage → bg-deep → bg-mist`
+across the cover, the middle slides in order, and the closing. Two slides in a
+row never share a surface, and sage never sits next to mist (they are 1.08:1
+apart and read as one color). `npm run generate` fails if either rule is
+broken.
+
+The previous palette's `bg-ground`, `bg-haze`, and `bg-espresso` are retired
+along with coral `#FF6F61`. A CSV row still using one of those names stops
+generation with the replacement named in the error.
+
+Sage and the other surfaces also appear as translucent washes behind
+subheading badges and as fading dot fields on every slide.
 
 ## Structure
 
@@ -72,7 +83,8 @@ cta_key,closing_background,middle_subheading
 
 - `publish_at` uses `YYYY-MM-DD HH:MM`; its month decides the output folder.
 - Write `\n` inside a field for an explicit line break.
-- Backgrounds: `bg-ground`, `bg-haze`, `bg-espresso`, `bg-deep`.
+- Backgrounds: `bg-teal`, `bg-sage`, `bg-deep`, `bg-mist`. They alternate;
+  see the rotation rules in `CLAUDE.md`.
 - `slide_number` orders the middle slides and must be unique per post. It is
   internal only — slide numbers are never displayed on a slide.
 - `middle_subheading` is an optional bold line (e.g. a person's name) placed

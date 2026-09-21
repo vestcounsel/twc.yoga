@@ -6,14 +6,15 @@
 <link href="../assets/fonts/montserrat.css" rel="stylesheet">
 <style>
   :root{
-    /* TWC palette (2026 refresh) */
-    --words:#0b3954;     /* text, dark navy */
-    --ground:#f5deb3;    /* primary light background, wheat */
-    --identity:#aed6f1;  /* sky blue identity tone */
-    --teal:#0077b6;      /* ocean blue accent, light surfaces */
-    --sage:#aed6f1;      /* sky blue accent, dark surfaces */
-    --deep:#0077b6;      /* ocean blue surface and accent */
-    --coral:#ff6f61;     /* coral surface (legacy class bg-espresso) */
+    /* TWC surfaces (2026 palette). Four backgrounds, rotated across a
+       carousel in this order: teal, sage, deep, mist. Sage and mist are
+       never adjacent: they sit 1.08:1 apart and read as the same color. */
+    --words:#0b3954;     /* text on teal, sage, and mist */
+    --teal:#0ca09d;      /* surface: bg-teal */
+    --sage:#8dc1b7;      /* surface: bg-sage; accent on teal, mist, deep */
+    --mist:#9db3bf;      /* surface: bg-mist */
+    --deep:#006793;      /* surface: bg-deep; accent on sage */
+    --light:#f5deb3;     /* text on the deep surface */
     --ml:88px;                 /* left and right margin */
     --asc:0.968; --em:1.219;   /* Montserrat metrics, do not edit */
   }
@@ -24,10 +25,10 @@
     font-family:'Montserrat',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  .slide.bg-ground  { background:var(--ground);   color:var(--words);  --bg:var(--ground);   --accent:var(--teal);  --dot:rgba(0,119,182,.25);   }
-  .slide.bg-haze    { background:var(--identity); color:var(--words);  --bg:var(--identity); --accent:var(--teal);  --dot:rgba(245,222,179,.6);  }
-  .slide.bg-espresso{ background:var(--coral);    color:var(--words);  --bg:var(--coral);    --accent:var(--words); --dot:rgba(245,222,179,.45); }
-  .slide.bg-deep    { background:var(--deep);     color:var(--ground); --bg:var(--deep);     --accent:var(--sage);  --dot:rgba(174,214,241,.4);  }
+  .slide.bg-teal    { background:var(--teal);     color:var(--words);  --bg:var(--teal);     --accent:var(--words); --dot:rgba(141,193,183,.45); }
+  .slide.bg-sage    { background:var(--sage);     color:var(--words);  --bg:var(--sage);     --accent:var(--deep);  --dot:rgba(0,103,147,.28);   }
+  .slide.bg-mist    { background:var(--mist);     color:var(--words);  --bg:var(--mist);     --accent:var(--words); --dot:rgba(0,103,147,.25);   }
+  .slide.bg-deep    { background:var(--deep);     color:var(--light);  --bg:var(--deep);     --accent:var(--sage);  --dot:rgba(141,193,183,.4);  }
 
   /* Ambient identity: a soft dot field in the blue-grey identity tone,
      fading in from the lower right, clear of headline and wordmark. */
@@ -61,7 +62,7 @@
 
 <!-- =======================================================================
      EDIT HERE.
-     Backgrounds:  bg-ground  bg-haze  bg-espresso  bg-deep
+     Backgrounds:  bg-teal  bg-sage  bg-deep  bg-mist
      Never indent a continuation line.
      ======================================================================= -->
 
@@ -84,7 +85,7 @@
   const slide = document.querySelector('.slide');
   const headline = document.querySelector('.headline');
   const subheading = document.querySelector('.subheading');
-  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-ground';
+  if (slide.className.indexOf(ph('BACKGROUND')) !== -1) slide.className = 'slide bg-sage';
   if (slide.dataset.ctaKey === ph('CTA_KEY')) slide.dataset.ctaKey = 'begin';
   if (headline.textContent === ph('CTA_HEADING')) headline.textContent = 'Begin your\npractice';
   if (subheading.textContent === ph('CTA_SUBHEADING')) subheading.textContent = 'Book your first class';
